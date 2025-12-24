@@ -5,6 +5,9 @@ import az.edu.itbrains.ecommerce.dtos.color.ColorDto;
 import az.edu.itbrains.ecommerce.dtos.color.ColorUpdateDto;
 import az.edu.itbrains.ecommerce.models.Color;
 import az.edu.itbrains.ecommerce.models.Size;
+import az.edu.itbrains.ecommerce.payloads.results.Result;
+import az.edu.itbrains.ecommerce.payloads.results.error.ErrorResult;
+import az.edu.itbrains.ecommerce.payloads.results.success.SuccessResult;
 import az.edu.itbrains.ecommerce.repositories.ColorRepository;
 import az.edu.itbrains.ecommerce.services.ColorService;
 import lombok.RequiredArgsConstructor;
@@ -32,14 +35,14 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
-    public boolean saveColor(ColorCreateDto colorCreateDto) {
+    public Result saveColor(ColorCreateDto colorCreateDto) {
         try {
             Color color = new Color();
             color.setName(colorCreateDto.getName());
             colorRepository.save(color);
-            return true;
+            return new SuccessResult("Color created successfully");
         }catch (Exception e){
-            return false;
+            return new ErrorResult(e.getMessage());
         }
     }
 
@@ -51,11 +54,11 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
-    public boolean updateColor(Long id, ColorUpdateDto colorUpdateDto) {
+    public Result updateColor(Long id, ColorUpdateDto colorUpdateDto) {
         Color color = colorRepository.findById(id).orElseThrow();
         color.setName(colorUpdateDto.getName());
         colorRepository.save(color);
-        return true;
+        return new SuccessResult("Color updated successfully");
     }
 
     @Override

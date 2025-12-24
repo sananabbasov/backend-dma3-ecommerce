@@ -9,4 +9,6 @@ public interface BasketService {
     void addToCart(String email, BasketAddDto basketAddDto);
 
     boolean removeFromBasket(String email, Long productId);
+
+    void removeAllItemsByEmail(String email);
 }

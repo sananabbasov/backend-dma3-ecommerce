@@ -57,4 +57,11 @@ public class BasketServiceImpl implements BasketService {
         }
         return false;
     }
+
+    @Override
+    public void removeAllItemsByEmail(String email) {
+        User user = userService.getByEmail(email);
+        List<Basket> baskets = user.getBaskets();
+        baskets.forEach(basket -> basketRepository.delete(basket));
+    }
 }

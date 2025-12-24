@@ -4,6 +4,9 @@ import az.edu.itbrains.ecommerce.dtos.product.*;
 import az.edu.itbrains.ecommerce.exceptions.ResourceNotFoundException;
 import az.edu.itbrains.ecommerce.models.Category;
 import az.edu.itbrains.ecommerce.models.Product;
+import az.edu.itbrains.ecommerce.payloads.results.Result;
+import az.edu.itbrains.ecommerce.payloads.results.error.ErrorResult;
+import az.edu.itbrains.ecommerce.payloads.results.success.SuccessResult;
 import az.edu.itbrains.ecommerce.repositories.ProductRepository;
 import az.edu.itbrains.ecommerce.services.CategoryService;
 import az.edu.itbrains.ecommerce.services.ColorService;
@@ -47,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void createProduct(ProductCreateDto productCreateDto) {
+    public Result createProduct(ProductCreateDto productCreateDto) {
         Product product = new Product();
         product.setName(productCreateDto.getName());
         product.setDescription(productCreateDto.getDescription());
@@ -60,8 +63,9 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(category);
         productRepository.save(product);
 
-        boolean result = colorSizeService.createColorSize(productCreateDto.getColorSizes(), product);
+        Result result = colorSizeService.createColorSize(productCreateDto.getColorSizes(), product);
 
+        return result.isSuccess() ? new SuccessResult("Product created successfully") : new ErrorResult("Product not created");
     }
 
     @Override

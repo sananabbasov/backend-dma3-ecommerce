@@ -2,7 +2,10 @@ package az.edu.itbrains.ecommerce.controllers;
 
 import az.edu.itbrains.ecommerce.dtos.basket.BasketAddDto;
 import az.edu.itbrains.ecommerce.dtos.basket.BasketUserDto;
+import az.edu.itbrains.ecommerce.dtos.order.OrderCreateDto;
+import az.edu.itbrains.ecommerce.dtos.user.UserCheckoutDto;
 import az.edu.itbrains.ecommerce.services.BasketService;
+import az.edu.itbrains.ecommerce.services.OrderService;
 import az.edu.itbrains.ecommerce.services.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +29,7 @@ public class BasketController {
 
     private final BasketService basketService;
     private final UserService userService;
+    private final OrderService orderService;
 
 
 
@@ -58,6 +62,26 @@ public class BasketController {
     public String remove(@PathVariable Long productId, Principal principal){
         String email = principal.getName();
         boolean result = basketService.removeFromBasket(email, productId);
+
+        return "redirect:/basket";
+    }
+
+    @GetMapping("/checkout")
+    @PreAuthorize("isAuthenticated()")
+    public String checkout(Model model, Principal principal){
+        String email = principal.getName();
+        UserCheckoutDto userCheckoutDto = userService.getUserCheckoutBasket(email);
+        model.addAttribute("user", userCheckoutDto);
+        return "cart/checkout.html";
+    }
+
+
+    @PostMapping("/checkout")
+    @PreAuthorize("isAuthenticated()")
+    public String checkout(OrderCreateDto orderCreateDto, Principal principal){
+        String email = principal.getName();
+
+        boolean result = orderService.createNewOrder(email, orderCreateDto);
 
         return "redirect:/basket";
     }

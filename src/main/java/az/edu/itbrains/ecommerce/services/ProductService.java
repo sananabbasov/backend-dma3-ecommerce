@@ -2,6 +2,7 @@ package az.edu.itbrains.ecommerce.services;
 
 import az.edu.itbrains.ecommerce.dtos.product.*;
 import az.edu.itbrains.ecommerce.models.Product;
+import az.edu.itbrains.ecommerce.payloads.results.Result;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface ProductService {
 
     ProductDetailDto getProductDetail(Long id);
 
-    void createProduct(ProductCreateDto productCreateDto);
+    Result createProduct(ProductCreateDto productCreateDto);
 
     List<ProductDashboardDto> getDashboardProducts();
 

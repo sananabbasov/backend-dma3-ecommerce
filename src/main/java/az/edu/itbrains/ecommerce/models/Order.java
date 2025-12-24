@@ -22,6 +22,9 @@ public class Order {
     private Long id;
     private OrderStatus orderStatus;
     private String address;
+    private String phone;
+    private String fullAddress;
+    private String note;
 
     @ManyToOne
     private User user;

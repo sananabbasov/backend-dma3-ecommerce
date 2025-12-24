@@ -6,6 +6,9 @@ import az.edu.itbrains.ecommerce.models.Color;
 import az.edu.itbrains.ecommerce.models.ColorSize;
 import az.edu.itbrains.ecommerce.models.Product;
 import az.edu.itbrains.ecommerce.models.Size;
+import az.edu.itbrains.ecommerce.payloads.results.Result;
+import az.edu.itbrains.ecommerce.payloads.results.error.ErrorResult;
+import az.edu.itbrains.ecommerce.payloads.results.success.SuccessResult;
 import az.edu.itbrains.ecommerce.repositories.ColorSizeRepository;
 import az.edu.itbrains.ecommerce.services.ColorService;
 import az.edu.itbrains.ecommerce.services.ColorSizeService;
@@ -26,7 +29,7 @@ public class ColorSizeServiceImpl implements ColorSizeService {
     private final SizeService sizeService;
 
     @Override
-    public boolean createColorSize(List<ColorSizeCreateDto> colorSizes, Product product) {
+    public Result createColorSize(List<ColorSizeCreateDto> colorSizes, Product product) {
 
        try {
            for (ColorSizeCreateDto colorSizeCreateDto : colorSizes) {
@@ -41,10 +44,10 @@ public class ColorSizeServiceImpl implements ColorSizeService {
                    colorSizeRepository.save(colorSize);
                }
            }
-           return true;
+           return new SuccessResult("Color size created successfully");
        }catch (Exception e){
            System.out.println(e.getMessage());
-           return false;
+           return new ErrorResult("Color size not created");
        }
     }
 }

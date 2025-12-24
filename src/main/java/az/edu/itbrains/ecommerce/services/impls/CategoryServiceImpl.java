@@ -4,6 +4,9 @@ import az.edu.itbrains.ecommerce.dtos.category.CategoryCreateDto;
 import az.edu.itbrains.ecommerce.dtos.category.CategoryDto;
 import az.edu.itbrains.ecommerce.dtos.category.CategoryUpdateDto;
 import az.edu.itbrains.ecommerce.models.Category;
+import az.edu.itbrains.ecommerce.payloads.results.Result;
+import az.edu.itbrains.ecommerce.payloads.results.error.ErrorResult;
+import az.edu.itbrains.ecommerce.payloads.results.success.SuccessResult;
 import az.edu.itbrains.ecommerce.repositories.CategoryRepository;
 import az.edu.itbrains.ecommerce.services.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -31,14 +34,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean saveCategory(CategoryCreateDto categoryCreateDto) {
+    public Result saveCategory(CategoryCreateDto categoryCreateDto) {
         try {
             Category category = new Category();
             category.setName(categoryCreateDto.getName());
             categoryRepository.save(category);
-            return true;
+            return new SuccessResult("Category created successfully");
         }catch (Exception e){
-            return false;
+            return new ErrorResult(e.getMessage());
         }
     }
 
@@ -50,11 +53,15 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public boolean updateCategory(Long id, CategoryUpdateDto categoryUpdateDto) {
-        Category category = categoryRepository.findById(id).orElseThrow();
-        category.setName(categoryUpdateDto.getName());
-        categoryRepository.save(category);
-        return true;
+    public Result updateCategory(Long id, CategoryUpdateDto categoryUpdateDto) {
+        try {
+            Category category = categoryRepository.findById(id).orElseThrow();
+            category.setName(categoryUpdateDto.getName());
+            categoryRepository.save(category);
+            return new SuccessResult("Category updated successfully");
+        }catch (Exception e){
+            return new ErrorResult(e.getMessage());
+        }
     }
 
     @Override

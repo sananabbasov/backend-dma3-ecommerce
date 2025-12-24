@@ -3,6 +3,7 @@ package az.edu.itbrains.ecommerce.controllers.admin;
 import az.edu.itbrains.ecommerce.dtos.size.SizeDto;
 import az.edu.itbrains.ecommerce.dtos.size.SizeCreateDto;
 import az.edu.itbrains.ecommerce.dtos.size.SizeUpdateDto;
+import az.edu.itbrains.ecommerce.payloads.results.Result;
 import az.edu.itbrains.ecommerce.services.CategoryService;
 import az.edu.itbrains.ecommerce.services.SizeService;
 import az.edu.itbrains.ecommerce.services.SizeService;
@@ -38,7 +39,7 @@ public class SizeController {
 
     @PostMapping("/create")
     public String create(SizeCreateDto sizeCreateDto){
-        boolean result = sizeService.saveSize(sizeCreateDto);
+        Result result = sizeService.saveSize(sizeCreateDto);
         return "redirect:/dashboard/size";
     }
 
@@ -52,7 +53,7 @@ public class SizeController {
 
     @PostMapping("/update/{id}")
     public String edit(@PathVariable Long id, SizeUpdateDto sizeUpdateDto){
-        boolean result = sizeService.updateSize(id, sizeUpdateDto);
+        Result result = sizeService.updateSize(id, sizeUpdateDto);
         return "redirect:/dashboard/size";
     }
 

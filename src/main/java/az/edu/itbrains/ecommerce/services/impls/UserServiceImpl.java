@@ -2,6 +2,7 @@ package az.edu.itbrains.ecommerce.services.impls;
 
 import az.edu.itbrains.ecommerce.dtos.auth.RegisterDto;
 import az.edu.itbrains.ecommerce.dtos.basket.BasketUserDto;
+import az.edu.itbrains.ecommerce.dtos.user.UserCheckoutDto;
 import az.edu.itbrains.ecommerce.models.Basket;
 import az.edu.itbrains.ecommerce.models.User;
 import az.edu.itbrains.ecommerce.repositories.UserRepository;
@@ -47,5 +48,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public UserCheckoutDto getUserCheckoutBasket(String email) {
+        User user = userRepository.findByEmail(email);
+        if(user != null){
+            return modelMapper.map(user, UserCheckoutDto.class);
+        }
+        throw new RuntimeException("User not found");
     }
 }

@@ -5,17 +5,18 @@ import az.edu.itbrains.ecommerce.dtos.color.ColorDto;
 import az.edu.itbrains.ecommerce.dtos.color.ColorUpdateDto;
 import az.edu.itbrains.ecommerce.models.Color;
 import az.edu.itbrains.ecommerce.models.Size;
+import az.edu.itbrains.ecommerce.payloads.results.Result;
 
 import java.util.List;
 
 public interface ColorService {
     List<ColorDto> getAllColors();
 
-    boolean saveColor(ColorCreateDto colorCreateDto);
+    Result saveColor(ColorCreateDto colorCreateDto);
 
     ColorUpdateDto findUpdatedColor(Long id);
 
-    boolean updateColor(Long id, ColorUpdateDto colorUpdateDto);
+    Result updateColor(Long id, ColorUpdateDto colorUpdateDto);
 
     Color getColorById(Long colorId);
 

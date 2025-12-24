@@ -3,6 +3,7 @@ package az.edu.itbrains.ecommerce.controllers.admin;
 import az.edu.itbrains.ecommerce.dtos.category.CategoryDto;
 import az.edu.itbrains.ecommerce.dtos.category.CategoryCreateDto;
 import az.edu.itbrains.ecommerce.dtos.category.CategoryUpdateDto;
+import az.edu.itbrains.ecommerce.payloads.results.Result;
 import az.edu.itbrains.ecommerce.services.CategoryService;
 import az.edu.itbrains.ecommerce.services.CategoryService;
 import az.edu.itbrains.ecommerce.services.CategoryService;
@@ -38,7 +39,7 @@ public class CategoryController {
 
     @PostMapping("/create")
     public String create(CategoryCreateDto categoryCreateDto){
-        boolean result = categoryService.saveCategory(categoryCreateDto);
+        Result result = categoryService.saveCategory(categoryCreateDto);
         return "redirect:/dashboard/category";
     }
 
@@ -52,7 +53,7 @@ public class CategoryController {
 
     @PostMapping("/update/{id}")
     public String edit(@PathVariable Long id, CategoryUpdateDto categoryUpdateDto){
-        boolean result = categoryService.updateCategory(id, categoryUpdateDto);
+        Result result = categoryService.updateCategory(id, categoryUpdateDto);
         return "redirect:/dashboard/category";
     }
 

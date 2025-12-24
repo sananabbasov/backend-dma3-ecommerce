@@ -2,6 +2,7 @@ package az.edu.itbrains.ecommerce.services;
 
 import az.edu.itbrains.ecommerce.dtos.auth.RegisterDto;
 import az.edu.itbrains.ecommerce.dtos.basket.BasketUserDto;
+import az.edu.itbrains.ecommerce.dtos.user.UserCheckoutDto;
 import az.edu.itbrains.ecommerce.models.User;
 import jakarta.validation.Valid;
 
@@ -13,4 +14,6 @@ public interface UserService {
     List<BasketUserDto> getUserBasket(String email);
 
     User getByEmail(String email);
+
+    UserCheckoutDto getUserCheckoutBasket(String email);
 }
